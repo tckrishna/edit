@@ -1,0 +1,438 @@
+{% extends 'layout.html' %}
+{% block title %}Scan{% endblock %}
+{% block body %}
+    <div id="scan-lang" class="center-flex">
+        <div class="horizontal-evenly-flex">
+            <div id="nl-lang" class="control-container" style="width: 180px;">
+                <div class="control">
+                    <img src="{{url_for('static', filename='img/nl.png')}}">
+                </div>
+                <div class="text">
+                    Nederlands
+                </div>
+            </div>
+            <div id="en-lang" class="control-container" style="width: 180px;">
+                <div class="control">
+                    <img src="{{url_for('static', filename='img/en.png')}}">
+                </div>
+                <div class="text">
+                    English
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="scan-start" class="center-flex shared hidden">
+        <div class="container">
+            <p data-lang="place_photo"></p>
+            <img src="{{url_for('static', filename='img/place_procedure.gif')}}" width="50%">
+        </div>
+        <div class="footer-controls-flex">
+            <div id="start-scan" class="control-container">
+                <div class="control">
+                    <img src="{{url_for('static', filename='img/ok.png')}}">
+                </div>
+                <div data-lang="start_scan" class="text"></div>
+            </div>
+        </div>
+    </div>
+    <div id="scan-progress" class="center-flex hidden">
+        <div class="container">
+            <p data-lang="scanning"></p>
+            <img src="{{url_for('static', filename='img/loading.gif')}}" width="100px">
+            <h1 id="progress"></h1>
+        </div>
+        <div class="footer-controls-flex">
+            <div id="start-scan" class="control-container">
+                <div class="control">
+                    <img src="{{url_for('static', filename='img/ok.png')}}">
+                </div>
+                <div class="text"> Refresh </div>
+            </div>
+        </div>
+    </div>
+    <div id="scan-validation" class="center-flex shared hidden">
+        <div class="container">
+            <p data-lang="validate"></p>
+            <div class="img-div rotation" style="max-height: 275px; width: 100%;">
+                <div>
+                    <img id="scan" class="border" src="">
+                </div>
+            </div>
+            <div class="horizontal-evenly-flex">
+                <div id="rotate-neg" class="control-container" style="width: 100px;">
+                    <div class="control">
+                        <img src="{{url_for('static', filename='img/rotate_anticlock.png')}}">
+                    </div>
+                    <div data-lang="rotate_neg" class="text"></div>
+                </div>
+                <div id="rotate-pos" class="control-container" style="width: 100px;">
+                    <div class="control">
+                        <img src="{{url_for('static', filename='img/rotate_clock.png')}}">
+                    </div>
+                    <div data-lang="rotate_pos" class="text"></div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-controls-flex">
+            <div id="cancel-validation" class="control-container">
+                <div class="control">
+                    <img src="{{url_for('static', filename='img/cancel.png')}}">
+                </div>
+                <div data-lang="cancel" class="text"></div>
+            </div>
+            <div id="submit-validation" class="control-container">
+                <div class="control">
+                    <img src="{{url_for('static', filename='img/ok.png')}}">
+                </div>
+                <div data-lang="ok" class="text"></div>
+            </div>
+        </div>
+    </div>
+    <div id="scan-contact" class="center-flex shared hidden">
+        <div class="container" style="width: 75vh; margin-bottom: 10%;">
+            <p data-lang="disclaimer"></p>
+            <div style="width: 30%; text-align: left; display: inline-block;">
+                <h1 data-lang="name"></h1>
+                <input id="name" type="text" maxlength="50" autocomplete="off" style="width: 220px;" placeholder="Name">
+                <br><br>
+                <h1 data-lang="email"></h1>
+                <input id="email" type="email" maxlength="50" autocomplete="off" style="width: 220px;" placeholder="email@gmail.com">
+                <br><br>
+                <h1 data-lang="phone"></h1>
+                <input id="phone" type="tel" maxlength="10" autocomplete="off" style="width: 220px;" placeholder="0412-34-56-78">
+                <br><br>
+                <h1 data-lang="date"></h1>
+                <input id="date" type="date" placeholder="dd/mm/yyyy">
+                <br><br>
+                <h1 data-lang="bedrijf"></h1>
+                <input id="bedrijf_desc" type="text" maxlength="50" autocomplete="off" style="width: 220px;" data-lang="bedrijf_desc">
+                <br><br>
+                <h1 data-lang="teelt"></h1>
+                <input id="teelt_desc" type="text" maxlength="50" autocomplete="off" style="width: 220px;" data-lang="teelt_desc">
+                <br><br>
+                <h1 data-lang="photographer"></h1>
+                <input id="foto_desc" type="text" maxlength="50" autocomplete="off" style="width: 220px;" data-lang="foto_desc">
+                <br><br>
+                <h1 data-lang="desc"></h1>
+                <textarea id="desc_desc" type="text" rows="4" cols="50" data-lang="desc_desc"></textarea>
+            </div>
+        </div>
+        <div class="footer-controls-flex">
+            <div id="cancel-contact" class="control-container">
+                <div class="control">
+                    <img src="{{url_for('static', filename='img/cancel.png')}}">
+                </div>
+                <div data-lang="cancel" class="text"></div>
+            </div>
+            <div id="submit-contact" class="control-container">
+                <div class="control">
+                    <img src="{{url_for('static', filename='img/ok.png')}}">
+                </div>
+                <div data-lang="ok" class="text"></div>
+            </div>
+        </div>
+    </div>
+    <div id="scan-upload" class="center-flex hidden">
+        <div class="container">
+            <p data-lang="uploading"></p>
+            <img src="{{url_for('static', filename='img/loading.gif')}}" width="100px">
+        </div>
+    </div>
+    <div id="scan-done" class="center-flex shared hidden">
+        <div class="container">
+            <p data-lang="take_photo"></p>
+            <img src="{{url_for('static', filename='img/take_procedure.gif')}}" width="50%">
+        </div>
+        <div class="footer-controls-flex">
+            <div class="control-container">
+                <div class="control">
+                    <img src="{{url_for('static', filename='img/count.png')}}">
+                    <div id="countdown" class="centered"></div>
+                </div>
+                <div class="text">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="overlay" class="hidden"></div>
+{% endblock %}
+{% block scripts %}
+    <!-- Main -->
+    <script type=text/javascript>
+        var request_interval = {{config.REQUEST_INTERVAL}};
+        var done_timeout = 10000;
+        var current_case = 'lang';
+        var previous_case = 'lang';
+        var img_blob = undefined;
+        var img_blob_url = undefined;
+        var rotation = 0;
+        var lang = 'nl';
+
+        function executeCase(expr) {
+            previous_case = current_case;
+            current_case = expr;
+            switch(expr) {
+                case 'lang':
+                    // Remove overlay, show language screen, disable submit, clear boxes
+                    $("#overlay").addClass("hidden");
+                    $("#submit-contact").addClass('disabled');
+                    $("#name").val("");
+                    $("#email").val("");
+                    $("#phone").val("");
+                    $("#date").val("");
+                    $("#bedrijf_desc").val("");
+                    $("#teelt_desc").val("");
+                    $("#foto_desc").val("");
+                    $("#desc_desc").val("");
+                    setScreen("lang");
+                    break;
+                case 'scan_start':
+                    // Show start screen
+                    setLanguage(lang); 
+                    setScreen("start");
+                    break;
+                case 'scan_start_submit':
+                    // Show progress screen, start scan
+                    $("#progress").text("0%");
+                    setScreen("progress");
+                    startScan();
+                    break;
+                case 'start_scan_failed':
+                    // Show overlay, startScan after request_interval
+                    $("#overlay").removeClass("hidden");
+                    setTimeout(startScan, request_interval);
+                    break;
+                case 'get_scan':
+                    // Get the scan
+                    getScan();
+                    break;
+                case 'get_scan_failed':
+                    // Show overlay, getScan after request_interval
+                    $("#overlay").removeClass("hidden");
+                    setTimeout(getScan, request_interval);
+                    break
+                case 'scan_validate':
+                    // Set image, show validation screen
+                    setScan();
+                    setScreen("validation");
+                    break;
+                case 'contact':
+                    // Set contact screen
+                    setScreen("contact");
+                    break;
+                case 'put_scan':
+                    // Upload screen, putScan
+                    setScreen("upload");
+                    putScan();
+                    break;
+                case 'scan_done':
+                    // Show done screen and change after request_interval
+                    showCountdown();
+                    setScreen("done");
+                    setTimeout(executeCase, done_timeout, 'lang')
+                    break;
+                case 'socket_disconnect':
+                    // Show overlay
+                    $("#overlay").removeClass("hidden");
+                    break;
+                case 'socket_reconnect':
+                    // Language screen
+                    executeCase('lang');
+                    break;
+                default:
+                    console.error("Invalid case: " + expr)
+            }
+        }
+
+        // Show screen
+        function setScreen(screen) {
+            $("#scan-lang").addClass("hidden");
+            $("#scan-start").addClass("hidden");
+            $("#scan-progress").addClass("hidden");
+            $("#scan-validation").addClass("hidden");
+            $("#scan-upload").addClass("hidden");
+            $("#scan-done").addClass("hidden");
+            $("#scan-contact").addClass("hidden");
+            $("#scan-" + screen).removeClass("hidden");
+        }
+
+        // Set scan
+        function setScan() {
+            $("#scan").attr('src', img_blob_url)
+            rotation = 0;
+            $("#scan").rotate(0);
+        }
+
+        // Rotation function
+        jQuery.fn.rotate = function(degrees) {
+            // Scale so the image stays constrained in div
+            var scale = 1;
+            if(degrees == 90 || degrees == 270) {
+                scale = Math.min(($(this).parent().height()/$(this).width()), ($(this).parent().height()/$(this).width()));
+            }
+            $(this).css({'transform' : 'rotate('+ degrees +'deg) scale('+ scale +')'});
+            return $(this);
+        };
+
+        // Rotate +90
+        function rotatePos() {
+            rotation = (rotation + 90) % 360;
+            $("#scan").rotate(rotation);
+        }
+
+        // Rotate -90
+        function rotateNeg() {
+            // Keep rotation between 0-360
+            rotation = (((rotation - 90) % 360) + 360) % 360;
+            $("#scan").rotate(rotation);
+        }
+
+        // Show the countdown
+        function showCountdown() {
+            var done_timeout_count = Math.floor(done_timeout/1000);
+            $("#countdown").text(done_timeout_count);
+            for(i = 1; i <= done_timeout_count; i++) {
+                setTimeout((number) => {$("#countdown").text(number)}, (1000 * i), (done_timeout_count - i));
+            }
+        }
+
+        // Check if name and email filled and set submit appropriatly
+        function checkContact() {
+            if (($("#name").val() != "" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test($("#email").val())) || ($("#name").val() != "" && $("#phone").val() != "")) {
+                $("#submit-contact").removeClass('disabled');
+            }
+            else {
+                $("#submit-contact").addClass('disabled');
+            }
+        }
+
+        // Start the scan process
+        function startScan() {
+            $.ajax({
+                method: 'GET',
+                crossDomain: true,
+                url: 'http://localhost:{{config.SCAN_PORT}}/start_scan'
+            })
+            .done(function(data) {
+                $("#overlay").addClass("hidden");
+            })
+            .fail(function(jqXHR) {
+                console.error("startScan() failed: " + jqXHR.status);
+                if(jqXHR.status != 409) {
+                    // Ignore 409: Already scanning
+                    executeCase('start_scan_failed');
+                }
+            });
+        }
+        
+        // Get the scan
+        function getScan() {
+            var oReq = new XMLHttpRequest();
+            oReq.open('GET', 'http://localhost:{{config.SCAN_PORT}}/get_scan', true);
+            oReq.responseType = "arraybuffer";
+            oReq.onload = function(oEvent) {
+                if(oReq.status == 200) {
+                    // Get blob
+                    img_blob = new Blob([oReq.response], {type: "image/jpeg"});
+                    // Revoke blob to prevent memory leaks
+                    URL.revokeObjectURL(img_blob_url);
+                    img_blob_url = URL.createObjectURL(img_blob);
+                    executeCase('scan_validate');
+                }
+                else {
+                    // Reset
+                    console.error("getScan() failed: " + oReq.status);
+                    alert("Get scan failed!");
+                    executeCase('lang');
+                }
+            };
+            oReq.send();
+        }
+        
+        // Upload image
+        function putScan() {
+            var formData = new FormData();
+            formData.append('scan', img_blob, 'scan.jpg');
+            formData.append('rotation', rotation);
+            formData.append('lang', lang);
+            formData.append('name', $("#name").val());
+            formData.append('email', $("#email").val());
+            formData.append('phone', $("#phone").val());
+            formData.append('date', $("#date").val());
+            formData.append('bedrijf', $("#bedrijf_desc").val());
+            formData.append('teelt', $("#teelt_desc").val());
+            formData.append('photographer', $("#foto_desc").val());
+            formData.append('desc', $("#desc_desc").val());
+            $.ajax({
+                method: 'POST',
+                url: {{url_for('put_scan')|tojson}},
+                data: formData,
+                processData: false,
+                contentType: false
+            })
+            .done(function(data) {
+                executeCase('scan_done');
+            })
+            .fail(function(jqXHR) {
+                // Reset
+                console.error("putScan() failed: " + jqXHR.status);
+                alert("Upload failed!");
+                executeCase('lang');
+            });
+        }
+
+        // Link inputs
+        $('#nl-lang').on('click', function(){lang='nl'; executeCase('scan_start');});
+        $('#en-lang').on('click', function(){lang='en'; executeCase('scan_start');});
+        $('#start-scan').on('click', function(){executeCase('scan_start_submit');});
+        $('#rotate-pos').on('click', rotatePos);
+        $('#rotate-neg').on('click', rotateNeg);
+        $('#submit-validation').on('click', function(){executeCase('contact');});
+        $('#cancel-validation').on('click', function(){executeCase('lang');});
+        $('#submit-contact').on('click', function(){executeCase('put_scan');});
+        $('#cancel-contact').on('click', function(){executeCase('lang');});
+        $("#name").on("change keyup", checkContact);
+        $("#email").on("change keyup", checkContact);
+        $("#phone").on("change keyup", checkContact);
+
+        // Socket scanner
+        var socket_scanner = io('http://localhost:{{config.SCAN_PORT}}/scan');
+
+        socket_scanner.on('progress', (msg) => {	
+            $("#progress").text(msg.progress.toFixed(0) + "%");	
+        });
+
+        socket_scanner.on('done', () => {
+            executeCase('get_scan');
+        });
+
+        socket_scanner.on('connect_error', () => {
+            executeCase('socket_disconnect');
+        });
+
+        socket_scanner.on('disconnect', () => {
+            executeCase('socket_disconnect');
+        });
+
+        socket_scanner.on('reconnect', () => {
+            executeCase('socket_reconnect');
+        });
+
+        // Socket server, mainly for checking server status
+        var socket_scanner = io('/');
+
+        socket_scanner.on('connect_error', () => {
+            executeCase('socket_disconnect');
+        });
+
+        socket_scanner.on('disconnect', () => {
+            executeCase('socket_disconnect');
+        });
+
+        socket_scanner.on('reconnect', () => {
+            executeCase('socket_reconnect');
+        });
+
+        $(document).ready(function(){executeCase('lang');});
+    </script>
+{% endblock %}

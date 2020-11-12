@@ -1,0 +1,441 @@
+{% extends 'layout.html' %}
+{% block title %}Upload{% endblock %}
+{% block body %}
+    <div id="upload-lang" class="center-flex">
+        <div class="horizontal-evenly-flex">
+            <div id="nl-lang" class="control-container" style="width: 180px;">
+                <div class="control">
+                    <img src="{{url_for('static', filename='img/nl.png')}}">
+                </div>
+                <div class="text">
+                    Nederlands
+                </div>
+            </div>
+            <div id="en-lang" class="control-container" style="width: 180px;">
+                <div class="control">
+                    <img src="{{url_for('static', filename='img/en.png')}}">
+                </div>
+                <div class="text">
+                    English
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="upload-select" class="center-flex hidden">
+        <div class="container">
+            <p data-lang="select_img"></p>
+            <div id="dropzone" class="clickable">
+                <p data-lang="drag_drop"></p>
+                <div class="img-div" style="height: 50vh; width: 100%;">
+                    <div>
+                        <img id="image" class="border" src="">
+                    </div>
+                </div>
+            </div>
+            <input id="file-image" type="file" accept="image/jpeg" hidden/>
+            <div class="horizontal-evenly-flex">
+                <div id="select-submit" class="control-container disabled">
+                    <div class="control">
+                        <img src="{{url_for('static', filename='img/ok.png')}}">
+                    </div>
+                    <div data-lang="ok" class="text"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="upload-audio" class="center-flex hidden">
+        <div class="container">
+            <p data-lang="start_rec"></p>
+            <img id="audio-record" src="{{url_for('static', filename='img/audio.png')}}" style="width: 150px"/>
+            <h1 id="duration">0:00</h1>
+            <audio id="player" controls></audio>
+            <div class="horizontal-evenly-flex">
+                <div id="audio-skip" class="control-container">
+                    <div class="control">
+                        <img src="{{url_for('static', filename='img/skip.png')}}">
+                    </div>
+                    <div data-lang="skip" class="text"></div>
+                </div>
+                <div id="audio-submit" class="control-container disabled">
+                    <div class="control">
+                        <img src="{{url_for('static', filename='img/ok.png')}}">
+                    </div>
+                    <div data-lang="ok" class="text"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="upload-location" class="center-flex hidden">
+        <div class="container">
+            <p data-lang="place_pin"></p>
+            <div id="map-container" style="width: 80%; margin: 0 10%; height: 50vh;">
+                <input id="searchbox" data-lang="search" class="controls" type="text" placeholder="...">
+                <div id="map"></div>
+            </div>
+            <div class="horizontal-evenly-flex">
+                <div id="location-cancel" class="control-container">
+                    <div class="control">
+                        <img src="{{url_for('static', filename='img/cancel.png')}}">
+                    </div>
+                    <div data-lang="cancel" class="text"></div>
+                </div>
+                <div id="location-submit" class="control-container disabled">
+                    <div class="control">
+                        <img src="{{url_for('static', filename='img/ok.png')}}">
+                    </div>
+                    <div data-lang="ok" class="text"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="upload-contact" class="center-flex shared hidden">
+        <div class="container" style="width: 75vh; margin-bottom: 10%;">
+            <p data-lang="disclaimer"></p>
+            <div style="width: 30%; text-align: left; display: inline-block;">
+                <h1 data-lang="name"></h1>
+                <input id="name" type="text" maxlength="50" autocomplete="off" style="width: 220px;" placeholder="Name">
+                <br><br>
+                <h1 data-lang="email"></h1>
+                <input id="email" type="email" maxlength="50" autocomplete="off" style="width: 220px;" placeholder="email@gmail.com">
+                <br><br>
+                <h1 data-lang="phone"></h1>
+                <input id="phone" type="tel" maxlength="10" autocomplete="off" style="width: 220px;" placeholder="0412-34-56-78">
+                <br><br>
+                <h1 data-lang="date"></h1>
+                <input id="date" type="date" placeholder="dd/mm/yyyy">
+                <br><br>
+                <h1 data-lang="bedrijf"></h1>
+                <input id="bedrijf_desc" type="text" maxlength="50" autocomplete="off" style="width: 220px;" data-lang="bedrijf_desc">
+                <br><br>
+                <h1 data-lang="teelt"></h1>
+                <input id="teelt_desc" type="text" maxlength="50" autocomplete="off" style="width: 220px;" data-lang="teelt_desc">
+                <br><br>
+                <h1 data-lang="photographer"></h1>
+                <input id="photographer" type="text" maxlength="50" autocomplete="off" style="width: 220px;" data-lang="foto_desc">
+                <br><br>
+                <h1 data-lang="desc"></h1>
+                <textarea id="desc_desc" type="text" rows="4" cols="50" data-lang="desc_desc"></textarea>
+            </div>
+        </div>
+        <div class="footer-controls-flex">
+            <div id="contact-cancel" class="control-container">
+                <div class="control">
+                    <img src="{{url_for('static', filename='img/cancel.png')}}">
+                </div>
+                <div data-lang="cancel" class="text"></div>
+            </div>
+            <div id="contact-submit" class="control-container">
+                <div class="control">
+                    <img src="{{url_for('static', filename='img/ok.png')}}">
+                </div>
+                <div data-lang="ok" class="text"></div>
+            </div>
+        </div>
+    </div>
+    <div id="overlay" class="hidden"></div>
+{% endblock %}
+{% block scripts %}
+    <!-- Audio recorder -->
+    <script type=text/javascript src="{{url_for('static', filename='scripts/recorder.js')}}"></script>
+    <!-- Maps handler -->
+    <script type=text/javascript src="{{url_for('static', filename='scripts/maps.js')}}"></script>
+    <!-- Main -->
+    <script type=text/javascript>
+        var request_interval = {{config.REQUEST_INTERVAL}};
+        var audio = false;
+        var current_case = 'lang';
+        var previous_case = 'lang';
+        var img_blob = undefined;
+        var img_blob_url = undefined;
+        var lang = 'nl';
+        var maps = new MapsHandler('map', 'searchbox', "{{config.GOOGLE_API_KEY}}",
+            libraries=[],
+            default_center={lat: {{config.DEFAULT_POS_LAT}}, lng: {{config.DEFAULT_POS_LNG}}},
+            default_zoom={{config.DEFAULT_ZOOM}},
+            map_blindspot=undefined,
+            map_listeners={},
+            marker=true,
+            marker_callback=()=>{executeCase('loc_selected');}
+        );
+
+        function executeCase(expr) {
+            previous_case = current_case;
+            current_case = expr;
+            switch(expr) {
+                case 'lang':
+                    // Remove overlay, show language screen, reset
+                    $("#overlay").addClass("hidden");
+                    setScreen("lang");
+                    resetPlayer();
+                    resetImage();
+                    break;
+                case 'select':
+                    // Set map, set language, show select screen
+                    setLanguage(lang);
+                    setScreen("select");
+                    break;
+                case 'img_selected':
+                    // Enable submit
+                    $("#select-submit").removeClass('disabled');
+                    $("#image").attr("src", img_blob_url);
+                    break;
+                case 'img_deselected':
+                    // Disable submit
+                    $("#select-submit").addClass('disabled');
+                    resetImage();
+                    break;
+                case 'enable_rec':
+                    // Set ready screen, enable record, enable skip
+                    setScreen('audio');
+                    break;
+                case 'rec':
+                    // Animate rec, disable submit, disable skip, reset player, start rec
+                    $('#audio-record').addClass('recording');
+                    $("#audio-submit").addClass('disabled');
+                    $("#audio-skip").addClass('disabled');
+                    resetPlayer();
+                    startRecording();
+                    break;
+                case 'stop_rec':
+                    // Remove rec animation, enable submit, enable skip, stop rec
+                    stopRecording();
+                    setPlayer();
+                    $('#audio-record').removeClass('recording');
+                    $("#audio-submit").removeClass('disabled');
+                    $("#audio-skip").removeClass('disabled');
+                    break;
+                case 'set_map':
+                    // Set map, wait for callback
+                    maps.reset();
+                    maps.setLanguage(lang, callback=()=>{executeCase('enable_map');});
+                    break;
+                case 'enable_map':
+                    // Set screen
+                    setScreen('location');
+                    break;
+                case 'loc_selected':
+                    // Enable submit
+                    $("#location-submit").removeClass('disabled');
+                    break;
+                case 'contact':
+                    // Set contact screen
+                    $("#contact-submit").addClass('disabled');
+                    $("#name").val("");
+                    $("#email").val("");
+                    $("#phone").val("");
+                    $("#date").val("");
+                    $("#bedrijf_desc").val("");
+                    $("#teelt_desc").val("");
+                    $("#foto_desc").val("");
+                    $("#desc_desc").val("");
+                    setScreen("contact");
+                    break;
+                case 'put_upload':
+                    // putUpload
+                    putUpload();
+                    break;
+                default:
+                    console.error("Invalid case: " + expr)
+            }
+        }
+
+        // Show screen
+        function setScreen(screen) {
+            $("#upload-lang").addClass("hidden");
+            $("#upload-select").addClass("hidden");
+            $("#upload-audio").addClass("hidden");
+            $("#upload-location").addClass("hidden");
+            $("#upload-contact").addClass("hidden");
+            $("#upload-" + screen).removeClass("hidden");
+        }
+
+        // Upload
+        function putUpload() {
+            var formData = new FormData();
+            formData.append('lang', lang);
+            formData.append("scan", img_blob, "scan.jpg");
+            if(audio) {
+                formData.append("audio", audio_blob, 'audio.wav');
+            }
+            formData.append("lat", maps.selected_marker.position.lat());
+            formData.append("lng", maps.selected_marker.position.lng());
+            formData.append('name', $("#name").val());
+            formData.append('email', $("#email").val());
+            formData.append('phone', $("#phone").val());
+            formData.append('date', $("#date").val());
+            formData.append('bedrijf', $("#bedrijf_desc").val());
+            formData.append('teelt', $("#teelt_desc").val());
+            formData.append('photographer', $("#foto_desc").val());
+            formData.append('desc', $("#desc_desc").val());
+            $.ajax({
+                method: 'POST',
+                url: {{url_for('put_upload')|tojson}},
+                data: formData,
+                processData: false,
+                contentType: false
+            })
+            .done(function(data) {
+                executeCase('lang');
+            })
+            .fail(function(jqXHR) {
+                // Reset
+                console.error("putUpload() failed: " + jqXHR.status);
+                alert("Upload failed!");
+                executeCase('lang');
+            });
+        }
+
+        // Link inputs
+        $('#nl-lang').on('click', function(){lang='nl', executeCase('select')});
+        $('#en-lang').on('click', function(){lang='en', executeCase('select')});
+        $('#select-submit').on('click', function(){executeCase('enable_rec')});
+        $('#audio-submit').on('click', function(){audio = true; executeCase('set_map')});
+        $('#audio-skip').on('click', function(){audio = false; executeCase('set_map')});
+        $('#audio-record').on('click', function() {
+            if(current_case == 'enable_rec' || current_case == 'stop_rec' || current_case == 'no_mic') {
+                executeCase('rec');
+            }
+            else if(current_case == 'rec') {
+                executeCase('stop_rec');
+            }
+        });
+        $('#location-submit').on('click', function(){executeCase('contact')});
+        $('#location-cancel').on('click', function(){executeCase('lang')});
+        $('#contact-submit').on('click', function(){executeCase('put_upload')});
+        $('#contact-cancel').on('click', function(){executeCase('lang')});
+        $("#name").on("change keyup", checkContact);
+        $("#email").on("change keyup", checkContact);
+        $("#phone").on("change keyup", checkContact);
+
+        // Check if name and email filled and set submit appropriatly
+        function checkContact() {
+            if (($("#name").val() != "" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test($("#email").val())) || ($("#name").val() != "" && $("#phone").val() != "")) {
+                $("#submit-contact").removeClass('disabled');
+            }
+            else {
+                $("#submit-contact").addClass('disabled');
+            }
+        }
+
+        // Drag and drop
+        $('#dropzone').on({
+            'drag dragstart dragend dragover dragenter dragleave drop': function(e) {
+                e.preventDefault();
+            },
+            'dragover': function(e) {
+                $("#dropzone").addClass('hover');
+            },
+            'dragleave drop': function(e) {
+                $("#dropzone").removeClass('hover');
+            },
+            'drop': function(e) {
+                setImage(e.originalEvent.dataTransfer.files[0]);
+            },
+            'click': function(e) {
+                $('#file-image').trigger('click');
+            },
+        });
+
+        // Conventional file select
+        $("#file-image").bind("change", function () {
+            if(this.files.length == 1) {
+                setImage(this.files[0])
+            }
+        });
+
+        function setImage(file) {
+            if(file.size < 11*1024*1024) {
+                old_url = img_blob_url;
+                img_blob = file;
+                img_blob_url = window.URL.createObjectURL(img_blob);
+                executeCase('img_selected');
+                URL.revokeObjectURL(old_url);
+            }
+            else {
+                executeCase('img_deselected');
+            }
+        }
+
+        function resetImage() {
+            $("#image").attr("src", '');
+            URL.revokeObjectURL(img_blob_url);
+        }
+
+        // ----- Audio recorder ----
+        var recorder = undefined;
+        var audio_blob;
+        var AudioContext = window.AudioContext || window.webkitAudioContext; // Shim when not available
+
+        var duration = 0;
+        var durationTimer;
+
+        function initRecorder() {
+            navigator.mediaDevices.getUserMedia({audio: true}).then(function(stream) {
+                audioContext = new AudioContext();
+                var gumStream = stream;
+                var input = audioContext.createMediaStreamSource(stream);
+                recorder = new Recorder(input,{numChannels:1})
+                $("#record-container").removeClass('disabled');
+            }).catch(function(err) {
+                console.warn('Unable to get recording device');
+                alert('Unable to get recording device');
+                $("#record-container").addClass('disabled');
+            });
+        }
+
+        function startRecording() {
+            recorder.clear();
+            recorder.record();
+            duration = 0;
+            durationTimer = setInterval(tick, 1000);
+        }
+
+        function stopRecording() {
+            recorder.stop();
+            clearInterval(durationTimer);
+        }
+
+        function setPlayer() {
+            $('#player')[0].pause();
+            recorder.exportWAV(function(blob) {
+                // Store blob for ajax
+                audio_blob = blob;
+                // Revoke blob to prevent memory leak
+                revokePlayerBlob
+                document.getElementById('player').src = URL.createObjectURL(blob);
+            });
+        }
+
+        function resetPlayer() {
+            $('#player')[0].pause();
+            // Revoke blob to prevent memory leak
+            revokePlayerBlob();
+            // Reset duration timer
+            document.getElementById('duration').innerText = "0:00";
+        }
+
+        function revokePlayerBlob() {
+            $('#player')[0].pause();
+            var blob_src = document.getElementById('player').src;
+            document.getElementById('player').src = "";
+            if(blob_src != ""){
+                URL.revokeObjectURL(blob_src);
+            }
+        }
+
+        function tick(){
+            duration++;
+            document.getElementById('duration').innerText = secondsToMinSec(duration);
+        }
+
+        function secondsToMinSec(seconds) {
+            var minutes = Math.floor(seconds / 60);
+            return (seconds == 60 ? (minutes+1) + ":00" : minutes + ":" + (seconds < 10 ? "0" : "") + seconds);
+        }
+
+        $(document).ready(function(){
+            initRecorder();
+            executeCase('lang');
+        });
+    </script>
+{% endblock %}
