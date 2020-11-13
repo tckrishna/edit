@@ -91,7 +91,7 @@
     <div id="upload-contact" class="center-flex shared hidden">
         <div class="container" style="width: 75vh;">
             <p data-lang="disclaimer"></p>
-            <div style="width: 30%; text-align: left; display: inline-block;">
+            <div style="width: 60%; text-align: left; display: inline-block;font-size:1rem">
                 <h1 data-lang="name"></h1>
                 <input id="name" type="text" maxlength="50" autocomplete="off" style="width: 220px;" placeholder="Name">
                 <br><br>
@@ -116,19 +116,19 @@
                 <h1 data-lang="desc"></h1>
                 <textarea id="desc_desc" type="text" rows="4" cols="40" data-lang="desc_desc"></textarea>
             </div>
-        </div>
-        <div class="footer-controls-flex">
-            <div id="contact-cancel" class="control-container">
-                <div class="control">
-                    <img src="{{url_for('static', filename='img/cancel.png')}}">
+            <div class="horizontal-evenly-flex">
+                <div id="contact-cancel" class="control-container">
+                    <div class="control">
+                        <img src="{{url_for('static', filename='img/cancel.png')}}">
+                    </div>
+                    <div data-lang="cancel" class="text"></div>
                 </div>
-                <div data-lang="cancel" class="text"></div>
-            </div>
-            <div id="contact-submit" class="control-container">
-                <div class="control">
-                    <img src="{{url_for('static', filename='img/ok.png')}}">
+                <div id="contact-submit" class="control-container">
+                    <div class="control">
+                        <img src="{{url_for('static', filename='img/ok.png')}}">
+                    </div>
+                    <div data-lang="ok" class="text"></div>
                 </div>
-                <div data-lang="ok" class="text"></div>
             </div>
         </div>
     </div>
@@ -299,13 +299,6 @@
                 executeCase('stop_rec');
             }
         });
-        $('#location-submit').on('click', function(){executeCase('contact')});
-        $('#location-cancel').on('click', function(){executeCase('lang')});
-        $('#contact-submit').on('click', function(){executeCase('put_upload')});
-        $('#contact-cancel').on('click', function(){executeCase('lang')});
-        $("#name").on("change keyup", checkContact);
-        $("#email").on("change keyup", checkContact);
-        $("#phone").on("change keyup", checkContact);
 
         // Check if name and email filled and set submit appropriatly
         function checkContact() {
@@ -316,6 +309,15 @@
                 $("#submit-contact").addClass('disabled');
             }
         }
+
+
+        $('#location-submit').on('click', function(){executeCase('contact')});
+        $('#location-cancel').on('click', function(){executeCase('lang')});
+        $('#contact-submit').on('click', function(){executeCase('put_upload')});
+        $('#contact-cancel').on('click', function(){executeCase('lang')});
+        $("#name").on("change keyup", checkContact);
+        $("#email").on("change keyup", checkContact);
+        $("#phone").on("change keyup", checkContact);
 
         // Drag and drop
         $('#dropzone').on({
