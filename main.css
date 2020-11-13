@@ -1,0 +1,351 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: #e9ebee;
+    user-select: none;
+    overflow: auto;
+}
+
+p {
+    padding: 5px;
+    margin: 0 0 1em 0;
+    font: 300 1.25rem Arial;
+    color: #292b2c;
+}
+
+h1 {
+    padding: 5px;
+    margin: 0;
+    font: bold 1rem Roboto;
+    color: #292b2c;
+}
+
+input {
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+#header {
+    padding : 1px;
+    font-family: Arial;
+    padding-left : 60px;
+    text-align: left;
+    background-color: #1abc9c;
+    color: white;
+    font-size: 30px;
+  }
+
+.center-flex {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
+}
+
+.center-flex.shared {
+	box-sizing: border-box;
+	padding-bottom: 12vh;
+}
+
+.center-flex > .container {
+    max-width: 80%;
+    min-width: 30%;
+    min-height: 80%;
+    padding: 20px;
+    text-align: center;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 1px 2px #0000001f;
+    margin-bottom:10%;
+    overflow: auto;
+}
+
+@media screen and (max-width: 800px) {
+    .center-flex > .container {
+      max-width: 100%; /* The width is 100%, when the viewport is 800px or smaller */
+      overflow: auto;
+      min-width: 10%;
+      font: 300 1rem Arial;
+      margin-bottom:16%;
+    }
+  }
+
+.horizontal-evenly-flex {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.img-div {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 3px;
+    overflow: hidden;
+    display: flex;
+}
+
+.img-div > div {
+	flex: 1;
+	text-align: center;
+}
+
+.img-div > div > img {
+	box-sizing: border-box;
+    max-width: 100%;
+    max-height: 100%;
+    vertical-align: bottom;
+}
+
+.border {
+    border: 1px solid #777777;
+}
+
+img.padding {
+    box-sizing: border-box;
+    padding: 3px;
+}
+
+img[src=""], img:not([src]) { 
+    display: none;
+}
+
+.img-div:not(.rotation) > div > img {
+	box-shadow: 0px 1px 2px #00000045;
+}
+
+.split-flex {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+}
+
+.split-flex > .left-center-flex {
+	box-sizing: border-box;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #ffffff;
+	box-shadow: 0 1px 2px #0000001f;
+}
+
+.split-flex > .right-center-flex {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.right-center-flex > .container {
+	box-sizing: border-box;
+    width: 75%;
+    padding: 40px;
+    text-align: center;
+    background-color: #ffffff;
+	border-radius: 5px;
+	box-shadow: 0 1px 2px #0000001f;
+}
+
+.horizontal-img-flex {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.horizontal-img-flex > div {
+    width: 100%;
+    flex: 100%;
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+
+.horizontal-img-flex > div> div {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.horizontal-img-flex > div > div > div {
+    box-sizing: border-box;
+    height: 100%;
+    padding: 5px;
+}
+
+.horizontal-img-flex > div > div > div > img {
+    height: 100%;
+}
+
+.footer-controls-flex {
+	position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    padding-bottom: 20px;
+    padding-right: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    pointer-events: none;
+}
+
+.control-container {
+    box-sizing: border-box;
+    width: 120px;
+    margin-right: 10px;
+    margin-left: 10px;
+    padding: 10px;
+    text-align: center;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+	box-shadow: 0px 1px 3px #00000045;
+}
+
+.control-container:not(.disabled) {
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+.disabled {
+    filter: grayscale(100%);
+    background-color: #dcdcdc;
+    pointer-events: none;
+}
+
+.control-container > .control {
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 10px 20px;
+}
+
+.control-container > .control > img {
+    width: 100%;
+    vertical-align: middle;
+}
+
+.control-container > .control > .centered {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font: 700 3rem Arial;
+    color: #FFFFFF;
+}
+
+.control-container > .text {
+    box-sizing: border-box;
+    width: 100%;
+    font: 700 1.25rem Arial;
+    color: #000000;
+}
+
+#dropzone {
+    margin: 20px;
+    padding: 20px;
+    border: 2px dashed #ccc;
+    border-radius: 5px;
+}
+
+#dropzone.hover {
+    background-color: #add8e6;
+}
+
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000000;
+    opacity: 0.5;
+    z-index: 1000;
+}
+
+#map {
+    height: 100%;
+    width: 100%;
+}
+
+#map-container {
+    position: relative;
+}
+
+.hidden {
+    display: none;
+}
+
+.clickable:hover {
+    cursor: pointer;
+}
+
+.recording {
+    animation: blinker 1s cubic-bezier(0, 0, 0, 1) infinite;
+}
+
+@keyframes blinker {
+    50% {
+        filter: saturate(175%);
+    }
+}
+
+/* ----- Search box ----- */
+.pac-item {
+	padding: 10px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	font-size: 1.25rem;
+    font-family: Roboto;
+}
+
+.pac-item-query {
+	padding-right: 10px;
+	font-size: 1.5rem;
+    font-family: Roboto;
+}
+
+.pac-controls label {
+    font-family: Roboto;
+    font-size: 1.5rem;
+    font-weight: 300;
+}
+
+.pac-container.pac-logo.hdpi::after {
+	display: none;
+}
+
+#searchbox {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    box-sizing: border-box;
+    width: 80%;
+	margin: 20px 10%;
+	padding: 10px 10px 10px 13px;
+    background-color: #FFFFFF;
+    font-family: Roboto;
+    font-size: 1.5rem;
+    font-weight: 300;
+    text-overflow: ellipsis;
+}
+
+#searchbox:focus {
+    border-color: #4d90fe;
+}
