@@ -88,7 +88,7 @@
             </div>
         </div>
     </div>
-    <div id="upload-contact" class="center-flex shared hidden">
+    <div id="upload-contact" class="center-flex shared">
         <div class="container" style="width: 75vh;">
             <p data-lang="disclaimer"></p>
             <div style="width: 60%; text-align: left; display: inline-block;font-size:1rem">
@@ -303,10 +303,10 @@
         // Check if name and email filled and set submit appropriatly
         function checkContact() {
             if (($("#name").val() != "" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test($("#email").val())) || ($("#name").val() != "" && $("#phone").val() != "")) {
-                $("#submit-contact").removeClass('disabled');
+                $("#contact-submit").removeClass('disabled');
             }
             else {
-                $("#submit-contact").addClass('disabled');
+                $("#contact-submit").addClass('disabled');
             }
         }
 

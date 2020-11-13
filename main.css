@@ -48,7 +48,8 @@ input {
 
 .center-flex.shared {
 	box-sizing: border-box;
-	padding-bottom: 12vh;
+    /* padding-bottom: 12vh; */
+    overflow: auto;
 }
 
 .center-flex > .container {
@@ -79,6 +80,7 @@ input {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    overflow: auto;
 }
 
 .img-div {
