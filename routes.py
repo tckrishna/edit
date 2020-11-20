@@ -257,6 +257,22 @@ def get_scans_top_total_today():
     # 400 = Bad request
     return Response(response=None, status=400)
 
+@app.route("/get_metadata", methods=["POST"])
+def get_metadata():
+    id = request.form.get("id", None, type=int)
+    if id is not None:
+        scans = db.getMetadata(id)
+        data = []
+        if len(scans) > 0:
+            for scan in scans:
+                data.append({'id': scan[0], 'total_score': scan[1]})
+        else:
+            data = None
+        return Response(response=json.dumps(data), status=200, mimetype='application/json')
+
+    # 400 = Bad request
+    return Response(response=None, status=400)
+
 # Return top total done scan previous day
 @app.route("/get_scans_top_total_yesterday", methods=["POST"])
 def get_scans_top_total_yesterday():

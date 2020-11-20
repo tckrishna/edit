@@ -44,7 +44,7 @@ def insertScan(lang, name, email, phone, date, bedrijf, teelt, fotographer, desc
     # elif email is None and phone is not None:
     #     cursor.execute('INSERT INTO scan (`language`, `name`, `phone`) VALUES (%s, %s, %s)', (lang, name, phone))
     # else:
-    cursor.execute('INSERT INTO scan (`language`, `name`, `email`, `phone`, `date`, `bedrijf`, `teelt`, `phone`, `desc`) VALUES (%s, %s, %s, %s,%s, %s, %s, %s, %s)', (lang, name, email, phone, date, bedrijf, teelt, fotographer, desc))
+    cursor.execute('INSERT INTO scan (`language`, `name`, `email`, `phone`, `date`, `bedrijf`, `teelt`, `fotographer`, `description`) VALUES (%s, %s, %s, %s,%s, %s, %s, %s, %s)', (lang, name, email, phone, date, bedrijf, teelt, fotographer, desc))
     
     connection.commit()
 
@@ -326,3 +326,12 @@ def updateScanSimLocTotalScore(id, sim_score, loc_score, total_score):
     connection.commit()
 
     __closeConnection(connection, cursor)
+    
+def getMetadata(id):
+    connection, cursor = __createConnection()
+
+    cursor.execute('SELECT `name`, `date`, `description` FROM scan WHERE`id` = %s', (id,))
+    data = cursor.fetchall()
+
+    __closeConnection(connection, cursor)
+    return data
