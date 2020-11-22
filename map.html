@@ -6,14 +6,14 @@
 {% endblock %}
 {% block body %}
     <div class="header" style="padding: 5px; ">
-    <h1 style="font: bold 35px Arial; color: #1e64c8; text-align: left ; padding : 5 px; padding-left : 30px;" data-lang="visualization"></h1>
+    <h1 style="font: bold 35px Arial; color: #3366cc; text-align: left ; padding : 5 px; padding-left : 30px;" data-lang="visualization"></h1>
     </div>
     <div class="split-flex">
         <div class="left-center-flex" style="padding: 5px; width: 40%;">
             <div style="height: 40%;">
                 <div class="img-div" style="height: 100%; width: 100%;">
                     <div>
-                        <img id="selected" class="border" src="{{url_for('static', filename='img/desc.png')}}">
+                        <img id="selected" class="border" src="{{url_for('static', filename='img/instruction.jpg')}}">
                     </div>
                 </div>
             </div>
@@ -68,19 +68,19 @@
 
         <!-- Modal content -->
         <div class="modal-content">
-        <div class="modal-header">
-            <span class="close">&times;</span>
-            <h2>About the Photograph</h2>
+            <div class="modal-header">
+                <span class="close">&times;</span>
+                <h2>Informatie over de foto</h2>
+            </div>
+            <div class="modal-body">
+                <p id="datum"></p>
+                <p id ="desc"></p>
+            </div>
+            <div class="modal-footer">
+                <h3 id="name"></h3>
+            </div>
         </div>
-        <div class="modal-body">
-            <p>Date: </p>
-            <p>Description: </p>
-        </div>
-        <div class="modal-footer">
-            <h3>&#169; Someone</h3>
-        </div>
-        </div>
-    
+
     </div>
 {% endblock %}
 {% block scripts %}
@@ -264,6 +264,9 @@
 
 
         function metadatapopup(metadata) {
+            document.getElementById("datum").textcontent = "Datum : " + metadata['date']
+            document.getElementById("desc").textcontent = "Omschrijving : " + metadata['description']
+            document.getElementById("name").textcontent = &#169;metadata['description']
             modal.style.display = "block";
         }
 
@@ -282,6 +285,7 @@
         function setSelected(id) {
             selected = id;
             $('#selected').attr("src", '/static/uploads/scans/' + id + '.jpg');
+            $('#selected').attr("class", 'border clickable');
             metadata = updatemetadata();
             $('#selected').attr("onclick", 'metadatapopup(' + metadata + ')');
             maps.map.setZoom(15);
