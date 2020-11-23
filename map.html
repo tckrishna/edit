@@ -94,9 +94,10 @@
         var CLOSEST_TIMEOUT = 100; // Timeout in ms
         var MAP_BLINDSPOT = {top: 120, bottom: 170, left: 50, right: 50};
 
+
+        var metadata = {};
         var selected = undefined;
         var lang = 'nl';
-        var metadata = {};
 
         // Get the modal
         var modal = document.getElementById("myModal");
@@ -187,7 +188,7 @@
         }
 
         // Get metadata for a specific id
-        function updatemetadata(callback) {
+        function updatemetadata(id) {
             var formData = new FormData();
             formData.append("id", selected);
             $.ajax({
@@ -195,11 +196,14 @@
                 url: {{url_for('get_metadata')|tojson}},
                 data: formData,
                 processData: false,
-                contentType: false
+                contentType: false,
+                onSuccess:  function(response){
+                                var metadata = response.responseText.evalJSON();
+                            }
             })
-            .done(function(data) {
-                callback(data);
-            })
+            // .done(function(data) {
+            //     callback(data);
+            // })
             .fail(function() {
                 console.error("getTopTotalToday failed");
             });
@@ -264,9 +268,9 @@
 
 
         function metadatapopup(metadata) {
-            document.getElementById("datum").textcontent = "Datum : " + metadata['date']
-            document.getElementById("desc").textcontent = "Omschrijving : " + metadata['description']
-            document.getElementById("name").textcontent = &#169;metadata['description']
+            document.getElementById("datum").textcontent = "Datum : " + metadata.date
+            document.getElementById("desc").textcontent = "Omschrijving : " + metadata.description
+            document.getElementById("name").textcontent = "&#169" + metadata.name
             modal.style.display = "block";
         }
 
@@ -286,7 +290,7 @@
             selected = id;
             $('#selected').attr("src", '/static/uploads/scans/' + id + '.jpg');
             $('#selected').attr("class", 'border clickable');
-            metadata = updatemetadata();
+            // metadata = updatemetadata;
             $('#selected').attr("onclick", 'metadatapopup(' + metadata + ')');
             maps.map.setZoom(15);
             maps.map.panTo({lat: maps.locations[id].lat, lng: maps.locations[id].lng});
