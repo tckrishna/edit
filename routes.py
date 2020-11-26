@@ -4,6 +4,7 @@ from flask_limiter.util import get_remote_address
 from flask_login import current_user, login_required, login_user, logout_user
 import threading
 import os
+import PIL
 
 from server import app
 
@@ -257,22 +258,6 @@ def get_scans_top_total_today():
     # 400 = Bad request
     return Response(response=None, status=400)
 
-@app.route("/get_metadata", methods=["POST"])
-def get_metadata():
-    id = request.form.get("id", None, type=int)
-    if id is not None:
-        scans = db.getMetadata(id)
-        data = []
-        if len(scans) > 0:
-            for scan in scans:
-                data.append({'id': scan[0], 'total_score': scan[1]})
-        else:
-            data = None
-        return Response(response=json.dumps(data), status=200, mimetype='application/json')
-
-    # 400 = Bad request
-    return Response(response=None, status=400)
-
 # Return top total done scan previous day
 @app.route("/get_scans_top_total_yesterday", methods=["POST"])
 def get_scans_top_total_yesterday():
@@ -293,7 +278,7 @@ def get_scans_top_total_yesterday():
 
 # Upload from file
 @app.route("/put_upload", methods=["POST"])
-@limiter.limit("3/minute;50/day")
+@limiter.limit("30/minute;1000/day")
 def put_upload():
     lang = request.form.get("lang", None, type=str)
     lat = request.form.get("lat", None, type=float)
@@ -325,7 +310,7 @@ def put_upload():
         # Assign files (if 2 scan files last one will be saved)
         for file in list(request.files.values()):
             extension = os.path.splitext(file.filename)[1]
-            if extension in ['.jpg', '.jpeg']:
+            if extension in ['.jpg', '.jpeg', '.JPG']:
                 scan_file = file
             elif extension == '.wav':
                 audio_file = file
@@ -352,6 +337,22 @@ def put_upload():
 
             # Return id in json format
             return Response(response=json.dumps({'id': id}), status=200, mimetype='application/json')
+
+    # 400 = Bad request
+    return Response(response=None, status=400)
+
+@app.route("/get_metadata", methods=["POST"])
+def get_metadata():
+    id = request.form.get("id", None, type=int)
+    if id is not None:
+        scans = db.getMetadata(id)
+        data = []
+        if len(scans) > 0:
+            for scan in scans:
+                data.append({'name': "Iemand" if scan[0] is None else scan[0], 'date': "Onbekend" if scan[1] is None else scan[1], 'description': "niet beschikbaar" if scan[2] is None else scan[2]})
+        else:
+            data = None
+        return Response(response=json.dumps(data[0]), status=200, mimetype='application/json')
 
     # 400 = Bad request
     return Response(response=None, status=400)
