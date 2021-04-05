@@ -105,6 +105,19 @@
         // Get the <span> element that closes the modal
         var span = document.getElementsByClassName("close")[0];
 
+        if(navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) { 
+                var maps = new MapsHandlerClustering('map', 'searchbox', "{{config.GOOGLE_API_KEY}}",
+                    libraries=[],
+                    default_center={lat: {{position.coords.latitude}}, lng: {position.coords.longitude}}},
+                    default_zoom={{config.DEFAULT_ZOOM}},
+                    map_blindspot={top: 120, bottom: 170, left: 50, right: 50},
+                    map_listeners={
+                        center_changed: setClosest,
+                    },
+                    marker=undefined
+                );
+
         var maps = new MapsHandlerClustering('map', 'searchbox', "{{config.GOOGLE_API_KEY}}",
             libraries=[],
             default_center={lat: {{config.DEFAULT_POS_LAT}}, lng: {{config.DEFAULT_POS_LNG}}},
@@ -115,23 +128,6 @@
             },
             marker=undefined
         );
-        
-        const belgium = [
-            {lat: 51.42754,lng: 2.93734},
-            {lat: 51.20781,lng: 6.23324},
-            {lat: 49.42623,lng: 6.07943},
-            {lat: 50.98703,lng: 1.94857}];
-
-        const polygon = new google.maps.Polygon({path: belgium });
-
-        if(navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
-                var userloc = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);                
-                if (google.maps.geometry.poly.containsLocation(userloc, polygon)) {
-                    maps.map.panTo({userloc});
-                }
-            });
-        } 
 
         // Get all locations of done scans
         function getLocs(callback) {
