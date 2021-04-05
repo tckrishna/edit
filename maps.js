@@ -1,15 +1,9 @@
 class MapsHandler {
-    constructor(map_id, search_id, api_key, libraries=['geometry'], default_center={lat: 0.0, lng: 0.0}, default_zoom=0, map_blindspot={top: 0, bottom: 0, left: 0, right: 0}, map_listeners={}, marker=false, marker_callback=null) {
-        this.map_region =[ 
-            {lat: 51.42754,lng: 2.93734},
-            {lat: 51.20781,lng: 6.23324},
-            {lat: 49.42623,lng: 6.07943},
-            {lat: 50.98703,lng: 1.94857}];
+    constructor(map_id, search_id, api_key, libraries=[], default_center={lat: 0.0, lng: 0.0}, default_zoom=0, map_blindspot={top: 0, bottom: 0, left: 0, right: 0}, map_listeners={}, marker=false, marker_callback=null) {
         this.map_id = map_id;
         this.search_id = search_id;
         this.api_key = api_key;
         this.libraries = ['places'].concat(libraries);
-        this.default_center = this.setUserLoc(default_center);
         this.default_zoom = default_zoom;
         this.map_blindspot = map_blindspot;
         this.map_listeners = map_listeners;
@@ -133,21 +127,6 @@ class MapsHandler {
         }
     }
 
-    setUserLoc(default_center){
-        const polygon = new google.maps.Polygon({path: this.map_region });
-        if(navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
-                user_loc = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-                if (google.maps.geometry.poly.containsLocation(user_loc, polygon)) {
-                    return {lat:position.coords.latitude, lng : position.coords.longitude};
-                }else{
-                    return default_center;
-                }
-            });
-        }
-    }
-
-
 
     init(center, zoom) {
         this.initMap(center, zoom);
@@ -226,6 +205,7 @@ class MapsHandlerClustering extends MapsHandler {
 
         this.selected_marker = undefined;
         this.locations = [];
+        this.setUserLoc(default_center);
     }
 
     preCallback(callback) {
@@ -301,6 +281,19 @@ class MapsHandlerClustering extends MapsHandler {
         // Sort by distance
         distances.sort((a, b) => {return (a.distance < b.distance) ? -1 : 1});
         return distances;
+    }
+
+    setUserLoc(){
+        map_region =[{lat: 51.42754,lng: 2.93734},{lat: 51.20781,lng: 6.23324},{lat: 49.42623,lng: 6.07943},{lat: 50.98703,lng: 1.94857}];
+        const polygon = new google.maps.Polygon({path: map_region });
+        if(navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                user_loc = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                if (google.maps.geometry.poly.containsLocation(user_loc, polygon)) {
+                    this.default_center = {lat:position.coords.latitude, lng : position.coords.longitude};
+                }
+            });
+        }
     }
 
 }
