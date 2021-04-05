@@ -5,6 +5,7 @@ class MapsHandler {
         this.api_key = api_key;
         this.libraries = ['places'].concat(libraries);
         this.default_zoom = default_zoom;
+        this.default_center = default_center;
         this.map_blindspot = map_blindspot;
         this.map_listeners = map_listeners;
         this.marker = marker;
@@ -205,7 +206,7 @@ class MapsHandlerClustering extends MapsHandler {
 
         this.selected_marker = undefined;
         this.locations = [];
-        this.setUserLoc(default_center);
+        this.setUserLoc();
     }
 
     preCallback(callback) {
@@ -285,7 +286,7 @@ class MapsHandlerClustering extends MapsHandler {
 
     setUserLoc(){
         map_region =[{lat: 51.42754,lng: 2.93734},{lat: 51.20781,lng: 6.23324},{lat: 49.42623,lng: 6.07943},{lat: 50.98703,lng: 1.94857}];
-        const polygon = new google.maps.Polygon({path: map_region });
+        const polygon = new google.maps.Polygon({path: map_region});
         if(navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
                 user_loc = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
