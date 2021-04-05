@@ -72,6 +72,17 @@ class MapsHandler {
         for (var key of Object.keys(this.map_listeners)) {
             this.map.addListener(key, this.map_listeners[key]);
         }
+
+        map_region =[{lat: 51.42754,lng: 2.93734},{lat: 51.20781,lng: 6.23324},{lat: 49.42623,lng: 6.07943},{lat: 50.98703,lng: 1.94857}];
+        const polygon = new google.maps.Polygon({path: map_region});
+        if(navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                user_loc = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                if (google.maps.geometry.poly.containsLocation(user_loc, polygon)) {
+                    this.default_center = {lat:position.coords.latitude, lng : position.coords.longitude};
+                }
+            });
+        }
     }
 
     initSearchBox() {
@@ -130,6 +141,7 @@ class MapsHandler {
 
 
     init(center, zoom) {
+        this.initMap(center, zoom);
         this.initMap(center, zoom);
         this.initSearchBox();
     }
@@ -206,7 +218,6 @@ class MapsHandlerClustering extends MapsHandler {
 
         this.selected_marker = undefined;
         this.locations = [];
-        this.setUserLoc();
     }
 
     preCallback(callback) {
@@ -282,19 +293,6 @@ class MapsHandlerClustering extends MapsHandler {
         // Sort by distance
         distances.sort((a, b) => {return (a.distance < b.distance) ? -1 : 1});
         return distances;
-    }
-
-    setUserLoc(){
-        map_region =[{lat: 51.42754,lng: 2.93734},{lat: 51.20781,lng: 6.23324},{lat: 49.42623,lng: 6.07943},{lat: 50.98703,lng: 1.94857}];
-        const polygon = new google.maps.Polygon({path: map_region});
-        if(navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
-                user_loc = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-                if (google.maps.geometry.poly.containsLocation(user_loc, polygon)) {
-                    this.default_center = {lat:position.coords.latitude, lng : position.coords.longitude};
-                }
-            });
-        }
     }
 
 }
