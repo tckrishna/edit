@@ -3,7 +3,7 @@ class MapsHandler {
         this.map_id = map_id;
         this.search_id = search_id;
         this.api_key = api_key;
-        this.libraries = ['places'].concat(libraries);
+        this.libraries = ['geometry','places'].concat(libraries);
         this.default_zoom = default_zoom;
         this.default_center = default_center;
         this.map_blindspot = map_blindspot;
@@ -43,6 +43,7 @@ class MapsHandler {
     }
 
     initMap(center, zoom) {
+        this.initCheckCenter();
         if (center == undefined || zoom == undefined) {
             center = this.default_center;
             zoom = this.default_zoom;
@@ -50,7 +51,7 @@ class MapsHandler {
         var options = {
             center: center,
             zoom: zoom,
-            maxZoom: 17,
+            maxZoom: 16,
             styles: this.MAP_STYLE,
             zoomControl: true,
             zoomControlOptions: {
@@ -71,17 +72,6 @@ class MapsHandler {
         }
         for (var key of Object.keys(this.map_listeners)) {
             this.map.addListener(key, this.map_listeners[key]);
-        }
-
-        map_region =[{lat: 51.42754,lng: 2.93734},{lat: 51.20781,lng: 6.23324},{lat: 49.42623,lng: 6.07943},{lat: 50.98703,lng: 1.94857}];
-        const polygon = new google.maps.Polygon({path: map_region});
-        if(navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
-                user_loc = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-                if (google.maps.geometry.poly.containsLocation(user_loc, polygon)) {
-                    this.default_center = {lat:position.coords.latitude, lng : position.coords.longitude};
-                }
-            });
         }
     }
 
@@ -125,6 +115,19 @@ class MapsHandler {
         });
     }
 
+    initCheckCenter(){
+        const map_region =[{lat: 51.42754,lng: 2.93734},{lat: 51.20781,lng: 6.23324},{lat: 49.42623,lng: 6.07943},{lat: 50.98703,lng: 1.94857}];
+        const polygon = new google.maps.Polygon({path: map_region});
+        if(navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var user_loc = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                if (google.maps.geometry.poly.containsLocation(user_loc, polygon)) {
+                    this.default_center={lat: position.coords.latitude, lng: position.coords.longitude};
+                }
+            });
+        }
+    }
+
     setMarker(position) {
         // Set map selected_marker null and create new marker
         if(this.selected_marker != undefined) {
@@ -139,9 +142,7 @@ class MapsHandler {
         }
     }
 
-
     init(center, zoom) {
-        this.initMap(center, zoom);
         this.initMap(center, zoom);
         this.initSearchBox();
     }
@@ -214,7 +215,7 @@ class MapsHandler {
 
 class MapsHandlerClustering extends MapsHandler {
     constructor(map_id, search_id, api_key, libraries=[], default_center={lat: 0.0, lng: 0.0}, default_zoom=0, map_blindspot={top: 0, bottom: 0, left: 0, right: 0}, map_listeners={}, marker=false, marker_callback=null) {
-        super(map_id, search_id, api_key, default_center, default_zoom, map_blindspot, map_listeners, marker, marker_callback);
+        super(map_id, search_id, api_key,['geometry'].concat(libraries), default_center, default_zoom, map_blindspot, map_listeners, marker, marker_callback);
 
         this.selected_marker = undefined;
         this.locations = [];
