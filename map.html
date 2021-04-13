@@ -109,9 +109,28 @@
 
         var polygon =[[51.42754,2.93734],[51.20781,6.23324],[49.42623,6.07943],[50.98703,1.94857]];
 
+        function inside(position, vs) {
+            // ray-casting algorithm based on
+            // https://wrf.ecse.rpi.edu/Research/Short_Notes/pnpoly.html/pnpoly.html
+            
+            var x = position.coords.latitude, y = position.coords.latitude;
+            
+            var inside = false;
+            for (var i = 0, j = vs.length - 1; i < vs.length; j = i++) {
+                var xi = vs[i][0], yi = vs[i][1];
+                var xj = vs[j][0], yj = vs[j][1];
+                
+                var intersect = ((yi > y) != (yj > y))
+                    && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+                if (intersect) inside = !inside;
+            }
+            
+            return inside;
+        };
+
         if(navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
-                if inside([ position.coords.latitude, position.coords.latitude], polygon) {
+                if inside(position, polygon) {
                     user_loc.lat = position.coords.latitude;
                     user_loc.lng = position.coords.latitude;
                 }else{
@@ -135,26 +154,6 @@
             },
             marker=undefined
         );
-
-
-        function inside(point, vs) {
-            // ray-casting algorithm based on
-            // https://wrf.ecse.rpi.edu/Research/Short_Notes/pnpoly.html/pnpoly.html
-            
-            var x = point[0], y = point[1];
-            
-            var inside = false;
-            for (var i = 0, j = vs.length - 1; i < vs.length; j = i++) {
-                var xi = vs[i][0], yi = vs[i][1];
-                var xj = vs[j][0], yj = vs[j][1];
-                
-                var intersect = ((yi > y) != (yj > y))
-                    && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
-                if (intersect) inside = !inside;
-            }
-            
-            return inside;
-        };
 
         // Get all locations of done scans
         function getLocs(callback) {
