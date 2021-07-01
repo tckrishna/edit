@@ -235,10 +235,12 @@ class MapsHandlerClustering extends MapsHandler {
             this.markerClusterer.clearMarkers();
         }
         var markers = [];
+        const image = "https://raw.githubusercontent.com/tckrishna/edit/main/pin.svg";
         Object.keys(locations).forEach(id => {
             var marker = new google.maps.Marker({
                 position: {lat: locations[id].lat, lng: locations[id].lng},
                 id: id,
+                icon: image,
             });
             // Add click event
             google.maps.event.addListener(marker, "click", function() {
@@ -266,10 +268,13 @@ class MapsHandlerClustering extends MapsHandler {
         });
         google.maps.event.addListener(this.markerClusterer, "click", function(c) {
             var bounds = new google.maps.LatLngBounds();
-            c.getMarkers().forEach(marker => {
-                bounds.extend(marker.getPosition());
-            });
-            this.map.fitBounds(bounds, this.map_blindspot);
+            // c.getMarkers().forEach(marker => {
+            //     bounds.extend(marker.getPosition());
+            // });
+            // this.map.fitBounds(bounds, this.map_blindspot);
+            var m = c.getMarkers();
+            setSelected(m[0].id);
+
         });
     }
 

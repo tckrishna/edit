@@ -330,7 +330,7 @@ def updateScanSimLocTotalScore(id, sim_score, loc_score, total_score):
 def getMetadata(id):
     connection, cursor = __createConnection()
 
-    cursor.execute('SELECT `name`, `date`, `description` FROM scan WHERE`id` = %s', (id,))
+    cursor.execute('SELECT `name`, `date`, `description`, `bedrijf` FROM scan WHERE`id` = %s', (id,))
     data = cursor.fetchall()
 
     __closeConnection(connection, cursor)

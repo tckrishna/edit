@@ -349,7 +349,7 @@ def get_metadata():
         data = []
         if len(scans) > 0:
             for scan in scans:
-                data.append({'name': "Iemand" if scan[0] is None else scan[0], 'date': "Onbekend" if scan[1] is None else scan[1], 'description': "niet beschikbaar" if scan[2] is None else scan[2]})
+                data.append({'name': "Iemand" if scan[0] is None else scan[0], 'date': "Onbekend" if scan[1] is None else scan[1], 'description': "beschrijving niet beschikbaar" if scan[2] is None else scan[2], 'company': "Onbekend" if scan[3] is None else scan[3]})
         else:
             data = None
         return Response(response=json.dumps(data[0]), status=200, mimetype='application/json')

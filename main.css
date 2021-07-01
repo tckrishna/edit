@@ -11,7 +11,7 @@ p {
     padding: 5px;
     margin: 0 0 1em 0;
     font: 300 1.25rem Arial;
-    color: #292b2c;
+    color: #292b2c;   
 }
 
 h1 {
@@ -21,19 +21,30 @@ h1 {
     color: #292b2c;
 }
 
+h2{
+    padding: 5px;
+    margin:0;
+    font:  bold 1rem Helvetica;
+    color: #292b2c;
+}
+
 input {
     box-sizing: border-box;
     font-size: 1rem;
 }
 
-#header {
-    padding : 1px;
+.header {
     font-family: Arial;
     padding-left : 60px;
     text-align: left;
-    background-color: #1abc9c;
+    background-color: #f5f5f5;
     color: white;
     font-size: 30px;
+    font: bold 35px Arial; 
+    color: #3366cc;
+    text-align: left ;
+    padding : 5 px; 
+    padding-left : 30px;
   }
 
 .center-flex {
@@ -132,6 +143,7 @@ img[src=""], img:not([src]) {
 .split-flex > .left-center-flex {
 	box-sizing: border-box;
     height: 100%;
+    width: 40%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -141,6 +153,7 @@ img[src=""], img:not([src]) {
 
 .split-flex > .right-center-flex {
     height: 100%;
+    width: 60%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -161,6 +174,13 @@ img[src=""], img:not([src]) {
     width: 100%;
     display: flex;
     flex-direction: column;
+}
+
+.horizontal-flex {
+    width: 100%;
+    overflow-y:auto; 
+    position:relative;
+    background-color: #e2e2e2 
 }
 
 .horizontal-img-flex > div {
@@ -200,9 +220,10 @@ img[src=""], img:not([src]) {
     pointer-events: none;
 }
 
+
 .control-container {
     box-sizing: border-box;
-    width: 120px;
+    width: 100px;
     margin-right: 10px;
     margin-left: 10px;
     padding: 10px;
@@ -227,11 +248,11 @@ img[src=""], img:not([src]) {
     position: relative;
     box-sizing: border-box;
     width: 100%;
-    padding: 10px 20px;
+    padding: 10px 10px;
 }
 
 .control-container > .control > img {
-    width: 100%;
+    width: 60%;
     vertical-align: middle;
 }
 
@@ -252,9 +273,81 @@ img[src=""], img:not([src]) {
 .control-container > .text {
     box-sizing: border-box;
     width: 100%;
-    font: 700 1.25rem Arial;
+    font: 700 1rem Arial;
     color: #000000;
 }
+
+.dropup {
+    position: relative;
+    display: inline-block;
+}
+  
+.dropup-content {
+    display: none;
+    position: absolute;
+    background-color: #ffffff;
+    min-width: 160px;
+    bottom:  80px;
+    z-index: 10;
+}
+  
+.dropup-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+  
+.dropup-content a:hover {background-color: rgb(109, 189, 221)}
+  
+.dropup:hover .dropup-content {
+    display: block;
+}
+  
+/* .dropup:hover .control-container {
+    opacity: 0.85;
+} */
+
+@media screen and (max-width: 600px) {
+    .control-container {
+        box-sizing: border-box;
+        width: 50px;
+        margin-right: 5px;
+        margin-left: 5px;
+        padding: 5px;
+        text-align: center;
+        background-color: #FFFFFF;
+        border-radius: 5px;
+        box-shadow: 0px 1px 3px #00000045;
+    }
+
+    .control-container > .text {
+        box-sizing: border-box;
+        width: 100%;
+        font: 700 0.50rem Arial;
+        color: #000000;
+    }
+
+    .control-container > .control {
+        position: relative;
+        box-sizing: border-box;
+        width: 100%;
+        padding: 10px 10px;
+    }
+    .control-container > .control > img {
+        width: 100%;
+        vertical-align: middle;
+    }
+
+    .header{
+        font: bold 23px Arial;
+        color: #3366cc;
+        text-align: left;
+        padding: 5 px;
+        padding-left: 10px;
+    }
+
+  }
 
 #dropzone {
     margin: 20px;
@@ -334,7 +427,7 @@ img[src=""], img:not([src]) {
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 100;
+    z-index: 1;
     box-sizing: border-box;
     width: 80%;
 	margin: 20px 10%;
@@ -347,14 +440,14 @@ img[src=""], img:not([src]) {
 }
 
 #searchbox:focus {
-    border-color: #4d90fe;
+    border-color: #3366cc;
 }
 
 /* The Modal (background) */
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+    z-index: 100000; /* Sit on top */
     left: 0;
     top: 0;
     width: 100%; /* Full width */
@@ -366,48 +459,60 @@ img[src=""], img:not([src]) {
     -webkit-animation-duration: 0.4s;
     animation-name: fadeIn;
     animation-duration: 0.4s
-  }
+}
   
-  /* Modal Content */
-  .modal-content {
+/* Modal Content */
+.modal-content {
     position: fixed;
     bottom: 0;
     background-color: #fefefe;
     width: 100%;
+    max-height: 100%;
+    max-width: 100%;
+    overflow: auto;
     -webkit-animation-name: slideIn;
     -webkit-animation-duration: 0.4s;
     animation-name: slideIn;
     animation-duration: 0.4s
-  }
-  
-  /* The Close Button */
-  .close {
+}
+
+.close {
     color: white;
     float: right;
     font-size: 28px;
     font-weight: bold;
-  }
+}
   
-  .close:hover,
-  .close:focus {
+.close:hover,
+.close:focus {
     color: #000;
     text-decoration: none;
     cursor: pointer;
-  }
+}
   
-  .modal-header {
+.modal-header {
     padding: 2px 16px;
-    background-color: #5cb85c;
+    background-color: #3366cc;
     color: white;
-  }
+}
   
-  .modal-body {padding: 2px 16px;}
+.modal-map {
+    padding: 10px 16px;
+    margin-left: auto;
+    margin-right: auto;
+    height: "90%";
+}
+.modal-body {
+    padding: 5px 5px;
+    /* margin-left: auto;
+    margin-right: auto; */
+}
   
-  .modal-footer {
+.modal-footer {
     padding: 2px 16px;
-    background-color: #5cb85c;
+    background-color: #3366cc;
     color: white;
-  }
+}
   
   /* Add Animation */
   @-webkit-keyframes slideIn {
